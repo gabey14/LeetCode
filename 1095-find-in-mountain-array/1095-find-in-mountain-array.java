@@ -9,18 +9,7 @@
  
 class Solution {
     public int findInMountainArray(int target, MountainArray mountainArr) {
-        int peakIndex = peakIndexInMountainArray(mountainArr);
-
-       int firstTry = binarySearch(mountainArr, target, 0, peakIndex);
-       if (firstTry != -1) {
-           return firstTry;
-       }
-       return binarySearch(mountainArr, target, peakIndex + 1, mountainArr.length() - 1);
-    }
-    
-    public int peakIndexInMountainArray(MountainArray mountainArr) {
-
-        int start = 0;
+          int start = 0;
         int end = mountainArr.length() - 1;
 
 
@@ -34,13 +23,13 @@ class Solution {
             }
         }
 
-        return start;
-    }
-    
-     public int binarySearch(MountainArray mountainArr, int target, int start, int end) {
 
-        // find whether the array is sorted in ascending or descending
-        boolean isAsc = mountainArr.get(start) < mountainArr.get(end);
+        int peakIndex = start;
+        start = 0;
+        end = peakIndex;
+
+        int index = -1;
+
 
         while (start <= end) {
             // find the middle element
@@ -48,25 +37,35 @@ class Solution {
             int mid = start + (end - start) / 2;
 
             if (mountainArr.get(mid) == target) {
-                return mid;
+                index = mid;
+                break;
+            } else if (target < mountainArr.get(mid)) {
+                end = mid - 1;
+            } else if (target > mountainArr.get(mid)) {
+                start = mid + 1;
             }
+        }
+        if (index == -1) {
+            start = peakIndex;
+            end = mountainArr.length() - 1;
 
-            if (isAsc) {
-                if (target < mountainArr.get(mid)) {
+            while (start <= end) {
+                // find the middle element
+//            int mid = (start + end) / 2; // might be possible that (start + end) exceeds the range of int in java
+                int mid = start + (end - start) / 2;
+
+                if (mountainArr.get(mid) == target) {
+                    index = mid;
+                    break;
+                } else if (target > mountainArr.get(mid)) {
                     end = mid - 1;
-                } else {
-                    start = mid + 1;
-                }
-            } else {
-                if (target > mountainArr.get(mid)) {
-                    end = mid - 1;
-                } else {
+                } else if (target < mountainArr.get(mid)) {
                     start = mid + 1;
                 }
             }
         }
-        return -1;
+
+        return index;
     }
-    
     
 }
