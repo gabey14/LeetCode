@@ -1,6 +1,6 @@
 class Solution {
     public int[] findErrorNums(int[] nums) {
-        //         Cyclic Sort the array
+          //         Cyclic Sort the array
         int i = 0;
         while (i < nums.length) {
 
@@ -13,13 +13,11 @@ class Solution {
                 i++;
             }
         }
-        int[] ans = new int[2];
         for (int index = 0; index < nums.length; index++) {
             if (nums[index] != index + 1) {
-                ans[0] = nums[index];
-                ans[1] = index + 1;
+                return new int[]{nums[index], index + 1};
             }
         }
-        return ans;
+        return new int[]{-1, -1};
     }
 }
