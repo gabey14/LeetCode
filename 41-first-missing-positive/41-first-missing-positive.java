@@ -1,11 +1,11 @@
 class Solution {
     public int firstMissingPositive(int[] nums) {
-         //         Cyclic Sort the array
+        //         Cyclic Sort the array
         int i = 0;
         while (i < nums.length) {
 
             int correct = nums[i] - 1;
-            if (nums[i] > 0 && nums[i] < nums.length && nums[i] != nums[correct]) {
+            if (nums[i] > 0 && nums[i] <= nums.length && nums[i] != nums[correct]) {
                 int temp = nums[correct];
                 nums[correct] = nums[i];
                 nums[i] = temp;
@@ -18,6 +18,6 @@ class Solution {
                 return index + 1;
             }
         }
-        return i+1;
+        return nums.length + 1;
     }
 }
